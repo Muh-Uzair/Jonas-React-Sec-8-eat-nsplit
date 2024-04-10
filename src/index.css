@@ -106,7 +106,7 @@ body {
 p {
     margin: 0;
 }
-.li_div_text{
+.li_div_texts{
 
     margin-left: 7px;
     /* background-color: bisque; */
@@ -177,7 +177,7 @@ p {
 .div_working{
 
     position: absolute;
-    right: 48px;
+    right: 36px;
 
 
 }
@@ -214,7 +214,7 @@ p {
 }
 .div_working{
 
-    width: 320px ;
+    width: 330px ;
     height: 160px;
     background-color: rgb(255, 241, 223);
     border-radius: 10px;
@@ -243,8 +243,13 @@ p {
     border-radius: 5px;
     border: 1px solid rgb(255, 214, 139);
 
+    width: 170px;
+
     outline: none;
     font-family: gilroy;
+
+    padding-left: 5px;
+    font-size: 17px;
      
 }
 .div_img_url{
@@ -313,18 +318,112 @@ p {
 
     width: 85%;
     height: 85%;
-    background-color: rgb(176, 255, 255);
+    /* background-color: rgb(176, 255, 255); */
 
     display: grid;
-    grid-template-rows: 30px 1fr;
+    grid-template-rows: 80px 1fr;
+
+}
+/* .div_upper{
+
+    background-color: rgb(174, 174, 174);
+} */
+.text_split_bill{
+    font-family: gilroy;
+    font-weight: 700;
+    font-size: 28px;
+
+    margin-top: 4%;
+}
+
+
+.div_lower{
+    /* background-color: rgb(181, 255, 107); */
+
+    display: grid;
+    grid-template-columns: 1fr 30%;
 
 }
 
 
+/* .div_lower_left{
+    background-color: rgb(185, 255, 255);
 
+} */
 
+.div_lower_right{
+    /* background-color: rgb(152, 180, 232); */
+    width: 100%;
 
+}
+.input_lower_right{
 
+    width: 96%;
+    border: 1px solid rgb(255, 224, 168);
+    height: 30px;
+    border-radius: 3px;
+
+    margin-bottom: 10px;
+
+    font-family: gilroy;
+    font-size: 17px;
+
+    padding-left: 5px;
+
+    outline: none;
+}
+.select_menu_lower_right{
+
+    width: 100%;
+    border: 1px solid rgb(255, 224, 168);
+    height: 33px;
+    border-radius: 3px;
+
+    margin-bottom: 10px;
+
+    padding-left: 45px;
+
+    font-family: gilroy;
+
+    outline: none;
+
+}
+.btn_split_bill {
+
+    padding: 10px 42px;
+    
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+    
+    font-family: gilroy;
+    font-size: 13px;
+    font-weight: 700;
+
+    background-color: rgb(248, 184, 66);
+
+    white-space: nowrap;
+
+}
+.btn_split_bill:hover {
+
+    background-color: rgb(246, 177, 49);
+}
+.btn_split_bill:active {
+
+    background-color: rgb(226, 163, 47);
+}
+.text_lower_right_first {
+    margin-top: 9px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 20px;
+}
+.text_lower_right{
+    margin-top: 19px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 20px;
+}
 
 
 
