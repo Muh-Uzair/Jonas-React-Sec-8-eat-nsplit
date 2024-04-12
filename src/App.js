@@ -4,7 +4,7 @@ import { Div_right_component } from "./components_folder/Div_right_component";
 
 
 
-export const initialFriends = [
+const initialFriends_demo = [
   {
     id: 118836,
     name: "Clark",
@@ -24,17 +24,24 @@ export const initialFriends = [
     balance: 0,
   },
   
+  
    
 ];
 
 
 export default function App() {
 
+  const [initialFriends , set_initial_friends] = useState(initialFriends_demo)
+
+
+  // 1 : 
   const [div_working_open_check , set_div_working_open_check] = useState(false) ;
   function handle_add_friend_btn_clicked(event_info_object){
     set_div_working_open_check(!div_working_open_check) ;
   }
 
+
+  // 2 : 
   const [div_right_open_check , set_div_right_open_check ] = useState(false) ;
   function handle_select_btn_clicking(event_info_object) {
 
@@ -59,6 +66,9 @@ export default function App() {
                               div_right_open_check={div_right_open_check}
                               set_div_right_open_check={set_div_right_open_check} 
                               handle_select_btn_clicking={handle_select_btn_clicking}
+
+                              initialFriends={initialFriends}
+                              set_initial_friends={set_initial_friends}
                               
 
 

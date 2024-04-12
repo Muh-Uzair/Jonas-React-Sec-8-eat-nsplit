@@ -1,6 +1,9 @@
-import { initialFriends } from "../App";
+import { useState } from "react";
 
-export function Div_left_component({ div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked, div_right_open_check, set_div_right_open_check , handle_select_btn_clicking }) {
+
+export function Div_left_component({ div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked, 
+        div_right_open_check, set_div_right_open_check , handle_select_btn_clicking,
+        initialFriends , set_initial_friends}) {
 
 
   return (
@@ -9,12 +12,15 @@ export function Div_left_component({ div_working_open_check, set_div_working_ope
 
 
 
-        <Div_friend_list_component   div_right_open_check={div_right_open_check}  set_div_right_open_check={set_div_right_open_check} handle_select_btn_clicking={handle_select_btn_clicking} />
+        <Div_friend_list_component   div_right_open_check={div_right_open_check}  set_div_right_open_check={set_div_right_open_check} handle_select_btn_clicking={handle_select_btn_clicking} 
+        initialFriends={initialFriends} set_initial_friends={set_initial_friends} />
 
 
         <Div_adding_friend_component div_working_open_check={div_working_open_check} 
                                     set_div_working_open_check={set_div_working_open_check}
                                     handle_add_friend_btn_clicked={handle_add_friend_btn_clicked} 
+
+                                    initialFriends={initialFriends} set_initial_friends={set_initial_friends}
                                 />
 
     </div>
@@ -25,7 +31,12 @@ export function Div_left_component({ div_working_open_check, set_div_working_ope
 }
 
 
-function Div_friend_list_component({div_right_open_check, set_div_right_open_check , handle_select_btn_clicking}){
+function Div_friend_list_component({div_right_open_check, set_div_right_open_check , handle_select_btn_clicking ,
+  initialFriends , set_initial_friends }) {
+
+
+
+
 
 
   return(
@@ -33,7 +44,7 @@ function Div_friend_list_component({div_right_open_check, set_div_right_open_che
 
           <ul>{initialFriends.map((val) => (
 
-            <li key={val.name}>
+            <li key={val.id}>
 
               <div className="li_div_img">
                 <img className="img_friend" src={val.image} />
@@ -60,7 +71,51 @@ function Div_friend_list_component({div_right_open_check, set_div_right_open_che
   )
 }
 
-function Div_adding_friend_component({ div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked }) {
+function Div_adding_friend_component({ div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked ,
+  initialFriends , set_initial_friends }) {
+
+
+
+
+    const [inputed_friend_name , set_inputed_friend_name] = useState("")
+    function handle_friend_name_change(event_info_object) {
+      event_info_object.preventDefault() ;
+      set_inputed_friend_name(event_info_object.target.value) ;
+    }
+
+
+    const [inputed_img_url , set_inputed_img_url] = useState("")
+    function handle_url_change(event_info_object) {
+
+      event_info_object.preventDefault() ;
+      set_inputed_img_url(event_info_object.target.value) ;
+    }
+
+
+
+
+    function handle_add_btn_click(event_info_object) {
+
+      event_info_object.preventDefault() ;
+
+
+      const new_friend_obj = {
+        id: Math.trunc(Math.random()*10001) ,
+        name: inputed_friend_name.charAt(0).toUpperCase() + inputed_friend_name.slice(1) ,
+        image: inputed_img_url,
+        balance: 0,
+      }
+
+      // console.log(new_friend_obj)
+
+      set_initial_friends((initialFriends) => [...initialFriends , new_friend_obj]) ;
+
+      set_inputed_friend_name("") ;
+      set_inputed_img_url("") ;
+
+    }
+
+
 
   return(
 
@@ -78,28 +133,30 @@ function Div_adding_friend_component({ div_working_open_check, set_div_working_o
 
                 {div_working_open_check === true &&
                   <>
-                    <div className="div_working">
 
-                      <div className="div_friend_name">
-                        <label className="inner_label label_friend_name">👫 Friend name</label>
-                        <input className="inner_input input_friend_name" />
+                      <form className="div_working" onSubmit={(e)=>handle_add_btn_click(e)}>
+
+                        <div className="div_friend_name">
+                          <label className="inner_label label_friend_name">👫 Friend name</label>
+                          <input className="inner_input input_friend_name"  onChange={(e) => handle_friend_name_change(e)} value={inputed_friend_name} />
+                        </div>
+
+                        <div className="div_img_url">
+                          <label className="inner_label label_img_url">🌄Image URL</label>
+                          <input className="inner_input input_friend_name"  onChange={(e) => handle_url_change(e)} value={inputed_img_url} />
+                        </div>
+
+                        <div className="div_final_add_btn">
+                          <input type="submit" className="btn_add" value={"ADD"}/>
+                        </div>
+
+                      </form>
+
+
+                      <div className="div_close_button">
+                        <button className="left_comp_btn btn_add_friend" onClick={(e) => handle_add_friend_btn_clicked(e)}>Close</button>
                       </div>
 
-                      <div className="div_img_url">
-                        <label className="inner_label label_img_url">🌄Image URL</label>
-                        <input className="inner_input input_friend_name" />
-                      </div>
-
-                      <div className="div_final_add_btn">
-                        <button className="btn_add">ADD</button>
-                      </div>
-
-
-                    </div>
-
-                    <div className="div_close_button">
-                      <button className="left_comp_btn btn_add_friend" onClick={(e) => handle_add_friend_btn_clicked(e)}>Close</button>
-                    </div>
                   </>}
 
       </div>
