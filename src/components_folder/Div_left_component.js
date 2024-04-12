@@ -1,6 +1,6 @@
 import { initialFriends } from "../App";
 
-export function Div_left_component({ div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked }) {
+export function Div_left_component({ div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked, div_right_open_check, set_div_right_open_check , handle_select_btn_clicking }) {
 
 
   return (
@@ -9,7 +9,7 @@ export function Div_left_component({ div_working_open_check, set_div_working_ope
 
 
 
-        <Div_friend_list_component />
+        <Div_friend_list_component   div_right_open_check={div_right_open_check}  set_div_right_open_check={set_div_right_open_check} handle_select_btn_clicking={handle_select_btn_clicking} />
 
 
         <Div_adding_friend_component div_working_open_check={div_working_open_check} 
@@ -25,14 +25,15 @@ export function Div_left_component({ div_working_open_check, set_div_working_ope
 }
 
 
-function Div_friend_list_component(){
+function Div_friend_list_component({div_right_open_check, set_div_right_open_check , handle_select_btn_clicking}){
+
 
   return(
     <div className="div_friend_list_component">
 
           <ul>{initialFriends.map((val) => (
 
-            <li>
+            <li key={val.name}>
 
               <div className="li_div_img">
                 <img className="img_friend" src={val.image} />
@@ -42,14 +43,14 @@ function Div_friend_list_component(){
 
                 <p className="friend_name">{val.name}</p>
 
-                {val.balance < 0 && <p className="payment_details" style={{ color: "red" }}>You owe {val.name} {val.balance}$</p>}
+                {val.balance < 0 && <p className="payment_details" style={{ color: "red" }}>You owe {val.name} {Math.abs(val.balance)} $</p>}
                 {val.balance > 0 && <p className="payment_details" style={{ color: "green" }}>{val.name} owes you {val.balance}$</p>}
                 {val.balance === 0 && <p className="payment_details">You and {val.name} are even</p>}
 
               </div>
 
               <div className="li_div_button">
-                <button className="li_button">Select</button>
+                <button className="li_button" onClick={(e) => handle_select_btn_clicking(e)}>Select</button>
               </div>
 
             </li>

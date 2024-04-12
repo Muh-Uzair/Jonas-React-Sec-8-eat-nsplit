@@ -35,6 +35,14 @@ export default function App() {
     set_div_working_open_check(!div_working_open_check) ;
   }
 
+  const [div_right_open_check , set_div_right_open_check ] = useState(false) ;
+  function handle_select_btn_clicking(event_info_object) {
+
+    set_div_right_open_check(!div_right_open_check) ;
+
+  }
+
+
 
 
   return(
@@ -47,11 +55,19 @@ export default function App() {
           <Div_left_component div_working_open_check={div_working_open_check} 
                               set_div_working_open_check={set_div_working_open_check}
                               handle_add_friend_btn_clicked={handle_add_friend_btn_clicked}
+
+                              div_right_open_check={div_right_open_check}
+                              set_div_right_open_check={set_div_right_open_check} 
+                              handle_select_btn_clicking={handle_select_btn_clicking}
+                              
+
+
                               />
 
 
 
-          <Div_right_component />
+          <Div_right_component div_right_open_check={div_right_open_check}
+                              set_div_right_open_check={set_div_right_open_check} />
 
 
 
