@@ -84,7 +84,7 @@ function Div_adding_friend_component({ div_working_open_check, set_div_working_o
     }
 
 
-    const [inputed_img_url , set_inputed_img_url] = useState("")
+    const [inputed_img_url , set_inputed_img_url] = useState("https://i.pravatar.cc/48?u=")
     function handle_url_change(event_info_object) {
 
       event_info_object.preventDefault() ;
@@ -96,22 +96,26 @@ function Div_adding_friend_component({ div_working_open_check, set_div_working_o
 
     function handle_add_btn_click(event_info_object) {
 
+
       event_info_object.preventDefault() ;
 
+      if(inputed_friend_name === "" || inputed_img_url === "") return ;
 
+      const new_id = Math.trunc(Math.random()*10001) ;
       const new_friend_obj = {
-        id: Math.trunc(Math.random()*10001) ,
+        id: new_id ,
         name: inputed_friend_name.charAt(0).toUpperCase() + inputed_friend_name.slice(1) ,
-        image: inputed_img_url,
+        image: `${inputed_img_url}${new_id}`,
         balance: 0,
       }
 
       // console.log(new_friend_obj)
+      
 
       set_initial_friends((initialFriends) => [...initialFriends , new_friend_obj]) ;
-
       set_inputed_friend_name("") ;
-      set_inputed_img_url("") ;
+      set_inputed_img_url("https://i.pravatar.cc/48?u=") ;
+      handle_add_friend_btn_clicked() ;
 
     }
 
@@ -124,7 +128,7 @@ function Div_adding_friend_component({ div_working_open_check, set_div_working_o
                 {div_working_open_check === false &&
                   <>
                     <div className="div_add_button">
-                      <button className="left_comp_btn btn_add_friend" onClick={(e) => handle_add_friend_btn_clicked(e)}>Add friend</button>
+                      <button className="left_comp_btn btn_add_friend" onClick={() => handle_add_friend_btn_clicked()}>Add friend</button>
                     </div>
                   </>}
 

@@ -36,7 +36,7 @@ export default function App() {
 
   // 1 : 
   const [div_working_open_check , set_div_working_open_check] = useState(false) ;
-  function handle_add_friend_btn_clicked(event_info_object){
+  function handle_add_friend_btn_clicked(){
     set_div_working_open_check(!div_working_open_check) ;
   }
 
@@ -77,7 +77,10 @@ export default function App() {
 
 
           <Div_right_component div_right_open_check={div_right_open_check}
-                              set_div_right_open_check={set_div_right_open_check} />
+                              set_div_right_open_check={set_div_right_open_check} 
+
+                        
+                              />
 
 
 
