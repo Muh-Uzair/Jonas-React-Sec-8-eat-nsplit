@@ -1,50 +1,73 @@
 import { useState } from "react";
 
 
-export function Div_left_component({ div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked, 
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+export function Div_left_component({ 
+
+        div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked, 
         div_right_open_check, set_div_right_open_check , handle_select_btn_clicking,
-        initialFriends , set_initial_friends}) {
+        initialFriends , set_initial_friends,
+        clicked_li , set_clicked_li,
+        select_btn_display , set_select_btn_display ,  
+      
+      }) {
 
 
+//--------------------------------------------------------------------------//        
   return (
 
     <div className="div_left_component">
 
 
 
-        <Div_friend_list_component   div_right_open_check={div_right_open_check}  set_div_right_open_check={set_div_right_open_check} handle_select_btn_clicking={handle_select_btn_clicking} 
-        initialFriends={initialFriends} set_initial_friends={set_initial_friends} />
+        <Div_friend_list_component   
+        div_right_open_check={div_right_open_check}  set_div_right_open_check={set_div_right_open_check} handle_select_btn_clicking={handle_select_btn_clicking} 
+        initialFriends={initialFriends} set_initial_friends={set_initial_friends} 
+        clicked_li={clicked_li} set_clicked_li={set_clicked_li}
+        select_btn_display={select_btn_display} set_select_btn_display={set_select_btn_display}
+        />
 
-
-        <Div_adding_friend_component div_working_open_check={div_working_open_check} 
-                                    set_div_working_open_check={set_div_working_open_check}
-                                    handle_add_friend_btn_clicked={handle_add_friend_btn_clicked} 
-
-                                    initialFriends={initialFriends} set_initial_friends={set_initial_friends}
-                                />
+        
+        <Div_adding_friend_component 
+        div_working_open_check={div_working_open_check} 
+        set_div_working_open_check={set_div_working_open_check}
+        handle_add_friend_btn_clicked={handle_add_friend_btn_clicked} 
+        initialFriends={initialFriends} set_initial_friends={set_initial_friends}
+        div_right_open_check={div_right_open_check}
+        /> 
 
     </div>
 
   );
+  //--------------------------------------------------------------------------// 
 
   
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function Div_friend_list_component({
+  
+  div_right_open_check, set_div_right_open_check , handle_select_btn_clicking ,
+  initialFriends , set_initial_friends , 
+  clicked_li , set_clicked_li ,
+  select_btn_display , set_select_btn_display ,  
 
-function Div_friend_list_component({div_right_open_check, set_div_right_open_check , handle_select_btn_clicking ,
-  initialFriends , set_initial_friends }) {
+}) {
+
+    
 
 
-
-
-
-
+//--------------------------------------------------------------------------// 
   return(
     <div className="div_friend_list_component">
 
           <ul>{initialFriends.map((val) => (
 
-            <li key={val.id}>
+            <li  key={val.id}  style={val.id === clicked_li && div_right_open_check === true ? {backgroundColor : "#fff1df"} : {}} >
 
               <div className="li_div_img">
                 <img className="img_friend" src={val.image} />
@@ -61,62 +84,77 @@ function Div_friend_list_component({div_right_open_check, set_div_right_open_che
               </div>
 
               <div className="li_div_button">
-                <button className="li_button" onClick={(e) => handle_select_btn_clicking(e)}>Select</button>
+                <button className="li_button" onClick={(e) => handle_select_btn_clicking(e , val.id , val )} >{ select_btn_display === "" ? "Select" : 
+                                                                                                                select_btn_display === "Select" && val.id === clicked_li && div_right_open_check === true ? "Close" : 
+                                                                                                                select_btn_display === "Close" && val.id === clicked_li && div_right_open_check === true ? "Close" : "Select"
+                                                                                                                
+                                                                                                              }</button>
               </div>
 
             </li>
+
           ))}</ul>
 
     </div>
   )
+//--------------------------------------------------------------------------// 
+
 }
 
-function Div_adding_friend_component({ div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked ,
-  initialFriends , set_initial_friends }) {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function Div_adding_friend_component({ 
+  
+  div_working_open_check, set_div_working_open_check, handle_add_friend_btn_clicked ,
+  initialFriends , set_initial_friends , div_right_open_check
+
+}) {
 
 
 
+        //______________________________________________________________________________________________//
+            const [inputed_friend_name , set_inputed_friend_name] = useState("")
+            function handle_friend_name_change(event_info_object) {
+              event_info_object.preventDefault() ;
+              set_inputed_friend_name(event_info_object.target.value) ;
+            }
 
-    const [inputed_friend_name , set_inputed_friend_name] = useState("")
-    function handle_friend_name_change(event_info_object) {
-      event_info_object.preventDefault() ;
-      set_inputed_friend_name(event_info_object.target.value) ;
-    }
+        //______________________________________________________________________________________________//
+            const [inputed_img_url , set_inputed_img_url] = useState("https://i.pravatar.cc/48?u=")
+            function handle_url_change(event_info_object) {
 
+              event_info_object.preventDefault() ;
+              set_inputed_img_url(event_info_object.target.value) ;
+            }
 
-    const [inputed_img_url , set_inputed_img_url] = useState("")
-    function handle_url_change(event_info_object) {
-
-      event_info_object.preventDefault() ;
-      set_inputed_img_url(event_info_object.target.value) ;
-    }
-
-
-
-
-    function handle_add_btn_click(event_info_object) {
-
-      event_info_object.preventDefault() ;
+        //______________________________________________________________________________________________//
+            function handle_add_btn_click(event_info_object) {
 
 
-      const new_friend_obj = {
-        id: Math.trunc(Math.random()*10001) ,
-        name: inputed_friend_name.charAt(0).toUpperCase() + inputed_friend_name.slice(1) ,
-        image: inputed_img_url,
-        balance: 0,
-      }
+              event_info_object.preventDefault() ;
 
-      // console.log(new_friend_obj)
+              if(inputed_friend_name === "" || inputed_img_url === "") return ;
 
-      set_initial_friends((initialFriends) => [...initialFriends , new_friend_obj]) ;
+              const new_id = Math.trunc(Math.random()*10001) ;
+              const new_friend_obj = {
+                id: new_id ,
+                name: inputed_friend_name.charAt(0).toUpperCase() + inputed_friend_name.slice(1) ,
+                image: `${inputed_img_url}${new_id}`,
+                balance: 0,
+              }
 
-      set_inputed_friend_name("") ;
-      set_inputed_img_url("") ;
+              // console.log(new_friend_obj)
+              
 
-    }
+              set_initial_friends((initialFriends) => [...initialFriends , new_friend_obj]) ;
+              set_inputed_friend_name("") ;
+              set_inputed_img_url("https://i.pravatar.cc/48?u=") ;
+              handle_add_friend_btn_clicked() ;
+
+            }
 
 
-
+//--------------------------------------------------------------------------// 
   return(
 
         <div className="div_adding_friend_component">
@@ -124,14 +162,13 @@ function Div_adding_friend_component({ div_working_open_check, set_div_working_o
                 {div_working_open_check === false &&
                   <>
                     <div className="div_add_button">
-                      <button className="left_comp_btn btn_add_friend" onClick={(e) => handle_add_friend_btn_clicked(e)}>Add friend</button>
+                      <button className="left_comp_btn btn_add_friend"  onClick={() => handle_add_friend_btn_clicked()}>Add friend</button>
                     </div>
                   </>}
 
 
 
-
-                {div_working_open_check === true &&
+                {( div_working_open_check === true) &&   
                   <>
 
                       <form className="div_working" onSubmit={(e)=>handle_add_btn_click(e)}>
@@ -160,6 +197,7 @@ function Div_adding_friend_component({ div_working_open_check, set_div_working_o
                   </>}
 
       </div>
-
   )
+//--------------------------------------------------------------------------// 
+
 }
